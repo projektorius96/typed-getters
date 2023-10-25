@@ -1,0 +1,13 @@
+{
+    "name": "@gloch96/typed-getters",
+    "version": "1.0.0",
+    "main": "index.mjs",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/projektorius96/typed-getters.git"
+    },
+    "description": "ECMAScript-modules-first getters for JavaScript primitives' type checking (backed by Symbols)",
+    "keywords": ["type-checking", "duck-typing", "types", "primitives", "symbols", "ESNEXT", "modules"],
+    "author": "Lukas Gaucas (projektorius96)",
+    "license": "MIT"
+}
