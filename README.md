@@ -14,7 +14,7 @@ As we all know, JavaScript (hereinafter – JS) is weakly typed (dynamic), parti
 
 #### Description
 
-We use `new$` for `Reflect.construct(interface, [struct])` signature, whereas `interface` (_first parameter-argument_) is an anonymous function declaration following `<identifier>$Interface` naming convention _as described just above_ ; likewise `struct` within syntactically-enforced Array literal syntax (_second parameter-argument_) is a plain object following the `<identifier>$Struct` naming convention respectively.
+We use `Reflect.apply(interface, struct, [...args])` signature, whereas `interface` (_first parameter-argument_) is an anonymous function declaration following `<identifier>$Interface` naming convention _as described just above_ ; likewise `struct` (_second parameter-argument_) is a plain – in our case prototypeless (nulled) - object following the `<identifier>$Struct` naming convention respectively. The _third parameter-argument_ is non-empty Array literal, the actual values passed to `interface`.
 
 ### Installation
 
@@ -27,50 +27,40 @@ npm install -g @gloch96/typed-getters
 #### Usage
 
 ```js
-import 'typed-getters/index.mjs';
+const Ryans$Struct = Object.create({
+    int: Symbol('age').description,
+    string: Symbol('name').description,
+    bool: Symbol('employment').description
+})
 
-const new$ = Reflect.construct;
-
-// Ryans$Struct - in this case - destructured prototypeless (nulled) object with an alias for each property, use object literals otherwise;
-const { age: a, name: n, isEmployed: iE } = Object.create({
-    age: 41,
-    name: "Ryan",
-    isEmployed: true
-});
-
-const Ryans$Interface = new$(
-        
-    function (age, name, isEmployed){
-        this.age = age?.isInt;
-        this.name = name?.isString
-        this.isEmployed = isEmployed?.isBool;
+function Ryans$Interface(age, name, employment){
+    return {
+        [this.int]: age?.isInt,
+        [this.string]: name?.isString,
+        [this.bool]: employment?.isBool,
     }
-    , 
-    [a, n, iE]
-    
-)
+}
 
-const Unknown$Interface = new$(
-    
-    function(age, name, isEmployed){
-        this.age = age?.isInt;
-        this.name = name?.isString
-        this.isEmployed = isEmployed?.isBool;
-    }
-    , 
-    [a, "Unknown" + n, iE].toReversed()
+const 
+    PASSING = Reflect.apply(
+        Ryans$Interface, 
+        Ryans$Struct,
+        [41, "YoungRyan", true]
+    )
+    ,
+    FAILING_GRACEFULLY = Reflect.apply(
+        Ryans$Interface, 
+        Ryans$Struct,
+        [-41, "UnknownRyan", !true].toReversed()
+    )
+    ;
 
-)
-
-console.log(
-    Ryans$Interface, /* { age: 41, name: 'Ryan', isEmployed: true }[PASSED] */
-    Unknown$Interface /*{ age: undefined, name: 'UnknownRyan', isEmployed: 
-    undefined }[PASSED, OTHERWISE FAILED GRACEFULLY WITH UNDEFINED IF ANY TYPE MISMATCH DETECTED] */
-)
+    console.log(
+        PASSING, /* { age: 41, name: 'YoungRyan', employment: true } */
+        FAILING_GRACEFULLY /* { age: undefined, name: 'UnknownRyan', employment: undefined } */
+    )
 ```
 
 ### To recap
 
-Pay attention that `Unknown$Interface` (_refer to [Usage example](#usage)_) has some mocked type mismatching that, _due to the **typed-getters** internal behaviour_, makes it to return `undefined` value gracefully!
-
-In our specific case, [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) used within each `<identifier>$Interface` is not-mandatory (_i.e. optional in its own sense_), nevertheless it gives some implicit feel of "asking" the type, so it's totally up to you whether you will use it or not.
+> With regards to each `Reflect.apply` invocation, **passed order of arguments matters**, please refer to `Ryans$Interface` parameters' order to reflect arguments correctly, however, in the case of `FAILING_GRACEFULLY`, the `.toReversed()` mocks some type mismatching, _thanks to **typed-getters** internal behaviour_, it return graceful `undefined` anywhere type mismatch detected ; In our specific case the [optional chaining operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) used for each of `Ryans$Interface`'s field is not-mandatory, _hence "optional" in its own sense_, nevertheless it gives some implicit feel of "asking" the type, so it's totally up to you whether you will use it or not.
