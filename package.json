@@ -1,0 +1,7 @@
+{
+    "name": "typed-getters",
+    "version": "1.0.0",
+    "author": "projektorius96",
+    "keywords": ["types", "primitives", "javascript", "no-typescript", "type-checking", "duck-typing"],
+    "license": "MIT"
+}
