@@ -1,4 +1,5 @@
-import '../index.mjs';
+/* import '../index.mjs'; */// # use the signature if you cloned straight away from repository without installing it
+import '@gloch96/typed-getters/src/index.mjs'// # use the signature if you had installed the package from npmjs registry
 
 const Coords$struct = {
     x: Number(),

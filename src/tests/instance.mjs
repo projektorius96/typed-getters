@@ -1,4 +1,5 @@
-import { new$ } from "../index.mjs";
+/* import { new$ } from "../index.mjs"; */// # use the signature if you cloned straight away from repository without installing it
+import { new$ } from '@gloch96/typed-getters/src/index.mjs';// # use the signature if you had installed the package from npmjs registry
 
 // DEV_NOTE # decoupled constructor (struct)
 class Portfolio$struct {
