@@ -72,14 +72,13 @@ export default (function() {
 }).call();
 
 /**
- * 
- * @param {Object} _struct - Object{key:value} pair(s);
- * @param {Function} _interface - arbitrary implementation of 'typed-getters' matching against _struct (object);
- * @param {Array} _args - list of arguments passed (if any);
- * @returns {Object} instance of matched typed : **any type mismatch gracefully returns "undefined" value for each key of `_struct`.**
+ * @param {Object} _struct - {key:value} pair(s) [i.e. factor use-case] OR non-static class members [i.e. instance use-case].
+ * @param {Function} _interface - arbitrary implementation of 'typed-getters' matching against `_struct`'s members.
+ * @param {Array} _args - list of arguments passed (if any).
+ * @returns {Object} instance of matched typed : **any type mismatch gracefully returns `undefined` value for each key of `_struct`**.
  */
 export function new$(_struct, _interface, _args = []){
     return (
-        Reflect.construct(_struct, _args, _interface/*  || _struct */)
+        Reflect.construct(_struct, _args, _interface)
     )
 }

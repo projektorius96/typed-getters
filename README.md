@@ -1,47 +1,75 @@
 # **Project name**: typed-getters (2024 edition)
 
-> **IDEA!** : Using [JSDocs](https://jsdoc.app/) in tandem with **typed-getters** could become a lightweight alternative over TypeScript .
-
 ### MOTIVATION
 
-Unlike default EcmaScript (JavaScript) constructors such as `String() defaults to '' | Number() defaults to 0 | Symbol() defaults to Symbol() | Boolean() defaults to false` whereas each by specification defaults to some value, the `typed-getters` helps to maintain consistency among JavaScript primitive simply returning a graceful `undefined`
+Unlike default EcmaScript (JavaScript) constructors such as `String() defaults to '' | Number() defaults to 0 | Symbol() defaults to Symbol() | Boolean() defaults to false` . Instead, using `typed-getters` we can maintain consistency among JavaScript primitives by simply returning a graceful `undefined` if any of type mismtach detected within arbitrarily-defined `interface`.
 
 ### HOW TO USE
 
 ### Installation
 
-Run the command `npm i -g @gloch96/typed-getters` : this will install the util at `$ echo "$(npm root -g)"` . When you import this util (package), use following ESM signature :
+To install util, run the following command: <br> 
+`npm i @gloch96/typed-getters`
 
-```
+Before using, common sense, you have to import it. Depending on your use-case, you can import it in the following way:
+
+**A. You need to instantiate it**
+
+```js
+// ./src/tests/instance.mjs
 import { new$ } from '@gloch96/typed-getters/src/index.mjs';
 ```
 
-> Please refer to `./src/tests/` running each test as `node /src/tests/test_name.mjs` | whereas "test_name" := `instance` | `factor` (you get the idea) ; each test example is ESM-friendly script that can be evaluated in both run-times : _browser of choice_ and _Node.js_ .
+**B. You need to factorise it**
+
+```js
+// ./src/tests/factor.mjs
+import '@gloch96/typed-getters/src/index.mjs';
+```
+
+### Test examples
+
+> Please refer to `./src/tests/<test_name>.mjs` where `<test_name>` := `instance` | `factor` (you get the idea); <br> 
+**Each test example is ESM-friendly script** that can be evaluated in both run-times, i.e. _browser of choice_ and _Node.js_.
 
 ### Review
 
-Consider the following code excerpt of our `node /src/tests/instance.mjs` example as follows :
+Consider the following code excerpt of our `./src/tests/instance.mjs` example as follows:
 
-```diff
-class Name$sruct {
+```js
+/**
+ * @type {struct}
+ */
+class Portfolio {
 
-    constructor(){
-        // constructor implements typed-getters via its accessors (refer to ./src/index.mjs for TypedMap)
+    constructor(age, name, isEmployed) {
+
+        this.age = age?.isInt;
+        this.name = name?.isString;
+        this.employed = isEmployed?.isBool;
+
     }
 
 }
 
-class Name$interface extends Name$sruct {
+/**
+ * @type {interface}
+ */
+class Printer {
 
-    methodDeclaration(){
-        // decoupled prototype for will-be instance of Name$sruct
+    getProfile() {
+        return (`
+            age=${this.age}
+            name=${this.name}
+            employed=${this.employed}
+        `)
     }
 
 }
 ```
 
-From the code above, we see that it only makes sense (decoupling) prototype from its related instance if we are _duck-typing_ . Of course, we could achieve similar idea using `Reflect.apply` (refer to `./src/tests/factor.mjs`), however in turn it would return **factor** rather than **instance** as our `new$` named export essentialy is nothing else than a slighly modified `Reflect.construct`.
+From the code above, we see that it only makes sense to decouple prototype from its related constructor if, and only if we are _duck-typing_ : of course, we could achieve similar idea using `Reflect.apply` (please refer to `./src/tests/factor.mjs`), however in such case `Reflect.apply` would then return a **factor** rather than the **instance** as our `new$` named export essentialy is nothing else than a slightly modified `Reflect.construct`.
 
 ---
 
-Happy coding ♥ projektorius96
+Made with ♥ projektorius96
