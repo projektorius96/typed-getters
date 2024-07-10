@@ -3,7 +3,7 @@
     "version": "2.0.1",
     "repository": {
         "type": "git",
-        "url": "https://github.com/projektorius96/typed-getters.git"
+        "url": "git+https://github.com/projektorius96/typed-getters.git"
     },
     "author": "projektorius96",
     "keywords": [
