@@ -1,5 +1,5 @@
-/* import { new$ } from "../index.mjs"; */// DEV_NOTE # use the signature if you cloned straight away from repository without installing it.
-import { new$ } from '@gloch96/typed-getters/src/index.mjs';// DEV_NOTE # use the signature if you had installed the package from npmjs registry.
+import { construct } from "../index.mjs";// DEV_NOTE # use the signature if you cloned straight away from repository without installing it.
+/* import { construct } from '@gloch96/typed-getters/src/index.mjs'; */// DEV_NOTE # use the signature if you had installed the package from npmjs registry.
 
 /**
  * @type {struct}
@@ -34,9 +34,9 @@ class Printer {
 console.log(
     "\n\n"
     ,
-    new$(Portfolio, Printer, [2024, "John Doe", false])/* .getProfile() */// OUTPUT # {age: 2024, name: 'John Doe', employed: false}
+    construct(Portfolio, Printer, [2024, "John Doe", false])/* .getProfile() */// OUTPUT # {age: 2024, name: 'John Doe', employed: false}
     ,
     "\n\n"
     , 
-    new$(Portfolio, Printer, ["2024", "John Doe", "false"])/* .getProfile() */// OUTPUT # {age: undefined, name: 'John Doe', employed: undefined}
+    construct(Portfolio, Printer, ["2024", "John Doe", "false"])/* .getProfile() */// OUTPUT # {age: undefined, name: 'John Doe', employed: undefined}
 )

@@ -1,5 +1,5 @@
-/* import '../index.mjs'; */// DEV_NOTE # use the signature if you cloned straight away from repository without installing it.
-import '@gloch96/typed-getters/src/index.mjs';// DEV_NOTE # use the signature if you had installed the package from npmjs registry.
+import '../index.mjs';// DEV_NOTE # use the signature if you cloned straight away from repository without installing it.
+/* import '@gloch96/typed-getters/src/index.mjs'; */// DEV_NOTE # use the signature if you had installed the package from npmjs registry.
 
 /**
  * @type {struct}
