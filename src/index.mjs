@@ -115,16 +115,7 @@ void function main() {
             get: TypedStruct[TypedMap.get(__SYMBOL__)]
         }
     );
+
 }();
 
-/**
- * @param {Object} struct - the {key : value} pair(s) [i.e. factor use case] OR non-static class members [i.e. instance use case]
- * @param {Function} Interface - arbitrary implementation of 'typed-getters' matching against `_struct`'s members
- * @param {Array} [args=[]] - list of arguments passed (if any, hence "optional")
- * @returns {Object} instance of matched typed : **any type mismatch gracefully returns `undefined` value for each key of a `_struct`**
- */
-export function construct(struct, Interface, args = []) {
-    return (
-        Reflect.construct(struct, args, Interface)
-    )
-}
+export const implementWith = (_interface, usingStruct)=> Reflect.apply(_interface, null, [usingStruct]);
